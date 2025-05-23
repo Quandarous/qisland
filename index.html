@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+    <!-- FAVICON -->
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    <link rel="manifest" href="site.webmanifest">
+
+    <script type="text/javascript" src="/js-dos-api.js"></script>
+
+    <title>QISLAND - Classic Game</title>
+</head>
+
+<body style="background: #0a0a0a; color: white; font-family: 'PT Sans', sans-serif; margin: 0; padding: 20px;">
+
+    <style>
+        body {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .game-container {
+            text-align: center;
+            max-width: 1000px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 30px;
+            background: #000000;
+            border-radius: 8px;
+            border: 1px solid #333;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        h1 {
+            font-family: 'Abril Fatface', serif;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            color: #ffffff;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+            color: #cccccc;
+            font-weight: 300;
+        }
+
+        #QISLAND>.dosbox-container {
+            width: 1000px;
+            margin: 20px auto;
+            border-radius: 4px;
+            overflow: hidden;
+            border: 2px solid #444;
+            background: #000;
+        }
+
+        canvas.dosbox-canvas {
+            width: 100% !important;
+        }
+
+        #QISLAND>.dosbox-container>.dosbox-overlay {
+            background: url("/poster.jpg");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-color: #111;
+        }
+
+        #QISLAND>.dosbox-container>.dosbox-overlay>.dosbox-start {
+            border-radius: 4px;
+            border: 2px solid #666;
+            background: #222;
+            color: white;
+            padding: 15px 25px;
+            text-align: center;
+            vertical-align: middle;
+            width: 12em;
+            margin: 0 auto;
+            font-weight: bold;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        #QISLAND>.dosbox-container>.dosbox-overlay>.dosbox-start:hover {
+            background: #333;
+            border-color: #888;
+            transform: translateY(-1px);
+        }
+
+        .controls {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .fullscreen-btn {
+            background: #222;
+            color: white;
+            border: 1px solid #555;
+            padding: 12px 24px;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 500;
+        }
+
+        .fullscreen-btn:hover {
+            background: #333;
+            border-color: #777;
+            transform: translateY(-1px);
+        }
+
+        .game-info {
+            margin-top: 30px;
+            padding: 20px;
+            background: #111;
+            border-radius: 4px;
+            border-left: 3px solid #555;
+            text-align: left;
+        }
+
+        .game-info h3 {
+            margin-top: 0;
+            color: #ffffff;
+            font-size: 1.2rem;
+        }
+
+        .game-info p {
+            color: #cccccc;
+            line-height: 1.5;
+        }
+
+        a:link,
+        a:visited {
+            color: white;
+            text-decoration: none;
+        }
+
+        @media (max-width: 900px) {
+            #QISLAND>.dosbox-container {
+                width: 100%;
+                max-width: 800px;
+            }
+
+            .game-container {
+                margin: 10px;
+                padding: 20px;
+            }
+        }
+
+        @media (max-width: 600px) {
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            .game-container {
+                padding: 15px;
+            }
+        }
+    </style>
+
+    <div class="game-container">
+        <h1>QISLAND</h1>
+        <p class="subtitle">Experience the Classic Adventure</p>
+
+        <div id="QISLAND" class="dosbox-default"></div>
+
+        <div class="controls">
+            <a id="fullscreen_QISLAND" href="javascript: void 0;" class="fullscreen-btn">
+                <i class="fa-solid fa-expand"></i>
+                Enter Fullscreen
+            </a>
+        </div>
+
+        <div class="game-info">
+            <h3><i class="fa-solid fa-gamepad"></i> Game Controls</h3>
+            <p>Use your keyboard to navigate and interact with the game. Press F11 or use the fullscreen button above
+                for the best gaming experience.</p>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        var dosbox_QISLAND = new Dosbox({
+            'id': 'QISLAND',
+            'onload': function (_0xf535de) {
+                dosbox_QISLAND.run("/game.zip", './QISLAND/QISLAND.EXE');
+            },
+            'onrun': function (_0x48eb8f, _0x5203d0) {
+                console.log("App '" + _0x5203d0 + "' is running");
+            }
+        });
+        document.getElementById("fullscreen_QISLAND").addEventListener("click", function () {
+            dosbox_QISLAND.requestFullScreen();
+        });
+    </script>
+
+</body>
+</html>
